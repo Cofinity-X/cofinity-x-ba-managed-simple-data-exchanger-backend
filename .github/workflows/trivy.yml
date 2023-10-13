@@ -20,7 +20,7 @@
 name: "Trivy"
 on:
   push:
-    branches: [main]
+    branches: [dev, main]
   schedule:
     # Once a day
     - cron: "0 0 * * *"
@@ -71,7 +71,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           # Path to Docker image
-          image-ref: "tractusx/managed-simple-data-exchanger-backend:latest"
+          image-ref: "cofinity-x/managed-simple-data-exchanger-backend:latest"
           format: "sarif"
           output: "trivy-results.sarif"
           exit-code: "1"
