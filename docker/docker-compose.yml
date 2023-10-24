@@ -27,7 +27,7 @@ services:
       - --import-realm
     volumes:
       # Mount path can be customized according to the project folder structure
-      - ./keycloak/cx-realm.json:/opt/keycloak/data/import/realm.json
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - "4011:8080"
     depends_on:
@@ -41,6 +41,24 @@ services:
       - 3002:8080
     volumes:
       - ./wiremock/edc:/home/wiremock
+  partner-pool-mock:
+    image: wiremock/wiremock:3.2.0
+    ports:
+      - 3001:8080
+    volumes:
+      - ./wiremock/partner_pool:/home/wiremock
+  digital-twins-mock:
+    image: wiremock/wiremock:3.2.0
+    ports:
+      - 3003:8080
+    volumes:
+      - ./wiremock/digital_twins:/home/wiremock
+  bpn-discovery-mock:
+    image: wiremock/wiremock:3.2.0
+    ports:
+      - 3004:8080
+    volumes:
+      - ./wiremock/bpn_discovery:/home/wiremock
 
 networks:
   sde-net:

@@ -2,7 +2,7 @@
   "priority": 1,
   "request": {
     "method": "POST",
-    "urlPath": "/management/v2/policydefinitions",
+    "urlPath": "/data/v2/policydefinitions",
     "bodyPatterns": [
       {
         "matchesJsonPath": "$.[?(@.@id == 'definition-id-already-exists')]"

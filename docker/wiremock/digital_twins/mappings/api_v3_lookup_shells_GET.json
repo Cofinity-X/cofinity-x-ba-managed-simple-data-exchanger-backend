@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3.0/lookup/shells"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "result": [
+        "12345"
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

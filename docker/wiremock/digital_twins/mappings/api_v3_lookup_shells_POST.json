@@ -1,8 +1,7 @@
 {
-  "priority": 10,
   "request": {
     "method": "POST",
-    "urlPath": "/management/v2/assets"
+    "urlPathPattern": "/api/v3.0/lookup/shells/.*"
   },
   "response": {
     "status": 200

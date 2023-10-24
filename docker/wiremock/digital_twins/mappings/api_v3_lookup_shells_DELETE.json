@@ -1,8 +1,7 @@
 {
-  "priority": 1,
   "request": {
     "method": "DELETE",
-    "urlPathPattern": "/management/v2/assets/.*"
+    "urlPathPattern": "/api/v3.0/lookup/shells/.*"
   },
   "response": {
     "status": 200
