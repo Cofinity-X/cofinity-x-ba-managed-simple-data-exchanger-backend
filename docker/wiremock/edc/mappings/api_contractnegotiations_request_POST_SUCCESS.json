@@ -13,10 +13,20 @@
           "edc:errorDetail": "test",
           "@id": "99",
           "edc:protocol": "dataspace-protocol-http",
-          "edc:state": "READY",
+          "edc:state": "FINALIZED",
           "edc:type": "PROVIDER"
-        }
+        },
+      {
+        "edc:contractAgreementId": "143254325",
+        "edc:counterPartyAddress": "Address2",
+        "edc:errorDetail": "test2",
+        "@id": "999",
+        "edc:protocol": "dataspace-protocol-http",
+        "edc:state": "FINALIZED",
+        "edc:type": "CONSUMER"
+      }
     ],
+
     "headers": {
       "Content-Type": "application/json"
     },

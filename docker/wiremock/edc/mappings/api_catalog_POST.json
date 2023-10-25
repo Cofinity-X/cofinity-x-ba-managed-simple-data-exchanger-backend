@@ -1,0 +1,87 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/data/v2/catalog/request"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "@id": "c6b93e69-4894-4353-85bd-3f4ce097af99",
+      "@type": "dcat:Catalog",
+      "dcat:dataset": {
+        "@id": "c14cbd4d-41b5-43fb-9629-d914e478ba73",
+        "@type": "dcat:Dataset",
+        "odrl:hasPolicy": {
+          "@id": "d694c7b4-17ec-4540-9991-9cc67eeb4c99:urn:uuid:40598c0f-8c53-4aa3-8281-1d82c9299bc3-urn:uuid:df0013c4-8296-41fa-a8b9-f251e5e1f638:29c448d4-a931-42f5-8605-b00608daee7a",
+          "@type": "odrl:Set",
+          "odrl:permission": {
+            "odrl:target": "urn_uuid_40598c0f-8c53-4aa3-8281-1d82c9299bc3-urn_uuid_df0013c4-8296-41fa-a8b9-f251e5e1f638",
+            "odrl:action": {
+              "odrl:type": "USE"
+            },
+            "odrl:constraint": {
+              "odrl:or": {
+                "odrl:leftOperand": "BusinessPartnerNumber",
+                "odrl:operator": {
+                  "@id": "odrl:eq"
+                },
+                "odrl:rightOperand": "BPNL001000TS0100"
+              }
+            }
+          },
+          "odrl:prohibition": [],
+          "odrl:obligation": [],
+          "odrl:target": "urn_uuid_40598c0f-8c53-4aa3-8281-1d82c9299bc3-urn_uuid_df0013c4-8296-41fa-a8b9-f251e5e1f638"
+        },
+        "dcat:distribution": [
+          {
+            "@type": "dcat:Distribution",
+            "dct:format": {
+              "@id": "HttpProxy"
+            },
+            "dcat:accessService": "db548bb3-3341-4ae3-8d70-6d0cd4482570"
+          },
+          {
+            "@type": "dcat:Distribution",
+            "dct:format": {
+              "@id": "AmazonS3"
+            },
+            "dcat:accessService": "db548bb3-3341-4ae3-8d70-6d0cd4482570"
+          }
+        ],
+        "edc:modified": "26/06/2023 16:27:38",
+        "edc:version": "1.0.0",
+        "edc:publisher": "BPNL001000TS0100:https://tsyste-f783465e-us.local.cx.dih-cloud.com",
+        "edc:type": "data.core.digitalTwin.submodel",
+        "edc:creationDate": "26/06/2023 16:27:38",
+        "edc:policy-id": "use-eu",
+        "edc:name": "BoM As-Built - Submodel SerialPartTypization",
+        "edc:description": "BoM As-Built - Submodel SerialPartTypization",
+        "edc:id": "urn_uuid_40598c0f-8c53-4aa3-8281-1d82c9299bc3-urn_uuid_df0013c4-8296-41fa-a8b9-f251e5e1f638",
+        "edc:contenttype": "application/json"
+      },
+      "dcat:service": {
+        "@id": "db548bb3-3341-4ae3-8d70-6d0cd4482570",
+        "@type": "dcat:DataService",
+        "dct:terms": "connector",
+        "dct:endpointUrl": "https://tsyste-f783465e-us.local.cx.dih-cloud.com/api/v1/dsp"
+      },
+      "edc:participantId": "BPNL001000TS0100",
+      "@context": {
+        "dct": "https://purl.org/dc/terms/",
+        "tx": "https://w3id.org/tractusx/v0.0.1/ns/",
+        "edc": "https://w3id.org/edc/v0.0.1/ns/",
+        "dcat": "https://www.w3.org/ns/dcat/",
+        "odrl": "http://www.w3.org/ns/odrl/2/",
+        "dspace": "https://w3id.org/dspace/v0.8/"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

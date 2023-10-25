@@ -59,6 +59,12 @@ services:
       - 3004:8080
     volumes:
       - ./wiremock/bpn_discovery:/home/wiremock
+  portal-mock:
+    image: wiremock/wiremock:3.2.0
+    ports:
+      - 3005:8080
+    volumes:
+      - ./wiremock/portal:/home/wiremock
 
 networks:
   sde-net:
