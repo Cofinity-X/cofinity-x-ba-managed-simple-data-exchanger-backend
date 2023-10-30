@@ -41,11 +41,23 @@
 
 	<properties>
 		<java.version>18</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<log4j2.version>2.17.1</log4j2.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<org.mapstruct.processor.version>1.3.1.Final</org.mapstruct.processor.version>
 		<snakey-version>2.0</snakey-version>
+		<springdoc.version>2.0.4</springdoc.version>
+		<assertj.version>3.24.2</assertj.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		<lombok.version>1.18.28</lombok.version>
+		<json-unit-assertj.version>2.38.0</json-unit-assertj.version>
+		<cucumber.version>7.12.1</cucumber.version>
+		<org-snakeyaml.version>2.2</org-snakeyaml.version>
+		<jackson.version>2.15.2</jackson.version>
+		<junit-bom.version>5.9.3</junit-bom.version>
+		<awaitility.version>3.0.0</awaitility.version>
 	</properties>
 
 	<modules>
@@ -56,6 +68,7 @@
 
 		<module>modules/sde-common</module>
 		<module>modules/sde-core</module>
+		<module>modules/sde-cucumber-tests</module>
 
 		<module>modules/sde-submodules/serial-part-typization</module>
 		<module>modules/sde-submodules/batch</module>
