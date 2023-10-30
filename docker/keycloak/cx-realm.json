@@ -2534,6 +2534,26 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "users": [
     {
+      "username": "catena-user",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test"
+        }
+      ],
+      "realmRoles":[
+        "default-roles-catena-x realm",
+        "uma_authorization",
+        "offline_access"
+      ],
+      "clientRoles": {
+        "realm-management": [ "query-clients", "manage-users", "view-clients"],
+        "account": [ "manage-account", "view-profile", "manage-account-links" ],
+        "Cl17-CX-Part":  [ "Creator", "Admin", "User" ]
+      }
+    },
+    {
       "id": "1bb05740-168f-4ba2-8b6b-f863625131a0",
       "createdTimestamp": 1698073634744,
       "username": "service-account-cl17-cx-part-service",
