@@ -57,10 +57,7 @@ jobs:
 
       - name: Cleanup after sonar scan
         run: |
-          ls -la /home/runner/.m2/repository/org/projectlombok/lombok
-          ls -la /home/runner/.m2/
-          ls -la /home/runner
-          ls -la /runner
+          ls -la /home/runner/.m2/repository/org/projectlombok/lombok/1.18.26
 
       - name: Prepare project for sonar-scanner
         run: mv pom.xml pom.xml.bak  # Necessary to avoid script failure due to detected Maven project -> Script will suggest to use maven plugin
