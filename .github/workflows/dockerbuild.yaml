@@ -53,7 +53,7 @@ jobs:
           distribution: 'temurin'
         
       - name: Build
-        run: mvn -B package
+        run: mvn -B verify
 
       - name: Prepare project for sonar-scanner
         run: | # Necessary to avoid script failure due to detected Maven project -> Script will suggest to use maven plugin
