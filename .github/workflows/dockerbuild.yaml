@@ -55,6 +55,9 @@ jobs:
       - name: Build
         run: mvn -B package
 
+      - name: Prepare project for sonar-scanner
+        run: mv pom.xml pom.xml.bak  # Necessary to avoid script failure due to detected Maven project -> Script will suggest to use maven plugin
+
       # SonarCloud Scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -62,6 +65,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Cleanup after sonar scan
+        run: mv pom.xml.bak pom.xml
 
       # Create SemVer or ref tags dependent of trigger event
       - name: Docker meta
