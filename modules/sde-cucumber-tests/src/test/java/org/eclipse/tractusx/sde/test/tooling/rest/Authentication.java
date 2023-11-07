@@ -20,7 +20,7 @@ public class Authentication {
     private String clientSecret;
     private String keycloakHost;
 
-    Authentication() {
+    public Authentication() {
         clientId = EnvVariablesResolver.getSupervisorClientId();
         clientSecret = EnvVariablesResolver.getSupervisorPassword();
         keycloakHost = EnvVariablesResolver.getKeycloakHost();
