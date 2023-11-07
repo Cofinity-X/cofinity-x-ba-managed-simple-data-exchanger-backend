@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/data/v2/contractnegotiations"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "id": "99999999"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/data/v2/contractnegotiations/"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "edc:contractAgreementId": "14325432",
+      "edc:counterPartyAddress": "Address",
+      "edc:errorDetail": "test",
+      "@id": "99",
+      "edc:protocol": "dataspace-protocol-http",
+      "edc:state": "FINALIZED",
+      "edc:type": "CONSUMER"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

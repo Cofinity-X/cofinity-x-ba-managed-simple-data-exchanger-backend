@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathTemplate": "/api/v3.0/shell-descriptors/{aasIdentifier}/submodel-descriptors"
+  },
+  "response": {
+    "status": 200
+  }
+}
