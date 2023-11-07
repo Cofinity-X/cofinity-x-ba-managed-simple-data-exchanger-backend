@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "DELETE",
+    "urlPathTemplate": "/api/v3.0/lookup/shells/{aasIdentifier}"
+  },
+  "response": {
+    "status": 200
+  }
+}

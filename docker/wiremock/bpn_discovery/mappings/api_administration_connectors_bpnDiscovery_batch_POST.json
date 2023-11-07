@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/administration/connectors/bpnDiscovery/batch"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "message": "example message",
+        "details": {
+          "type": "example type"
+        },
+        "key": "example key",
+        "status": "example status"
+      }
+    ],
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

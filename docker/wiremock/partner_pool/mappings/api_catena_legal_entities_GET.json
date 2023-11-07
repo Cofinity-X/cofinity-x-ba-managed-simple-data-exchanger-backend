@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/catena/legal-entities"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "totalElements": 1,
+      "totalPages": 1,
+      "page": 1,
+      "content": [
+        {
+          "score": 1.0,
+          "legalName": "testCompany GmbH",
+          "legalShortName": "TCO",
+          "bpnl": "123",
+          "bpnLegalEntity": "12342",
+          "legalForm": {
+            "technicalKey": "1231",
+            "name": "a",
+            "abbreviation": "a"
+          }
+        }
+      ]
+  },
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
+}
