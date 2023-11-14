@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class RequestUtils {
 
-    public static ArrayList<UsagePolicies> buildUsagePolicies(final Map<String, String> input) {
+    public static ArrayList<UsagePolicies> buildUsagePolicies(Map<String, String> input) {
         final String type = input.getOrDefault("type", "DURATION");
-        final String value = input.getOrDefault("value", "value");
+        final String value = input.getOrDefault("value", "1");
         final String typeOfAccess = input.getOrDefault("type_of_access", "RESTRICTED");
         final String durationUnit = input.getOrDefault("durationUnit", "YEAR");
         final UsagePolicies policy = UsagePolicies.builder()
@@ -26,7 +26,7 @@ public class RequestUtils {
         return new ArrayList<>(Collections.singletonList(policy));
     }
 
-    public static ArrayList<Offer> buildOffers(final Map<String, String> input) {
+    public static ArrayList<Offer> buildOffers(Map<String, String> input) {
         final String offerId = input.getOrDefault("offerId", "TestId5784");
         final String assetId = input.getOrDefault("assetId", "AssetId5784");
         final String policyId = input.getOrDefault("policyId", "PoId5784");

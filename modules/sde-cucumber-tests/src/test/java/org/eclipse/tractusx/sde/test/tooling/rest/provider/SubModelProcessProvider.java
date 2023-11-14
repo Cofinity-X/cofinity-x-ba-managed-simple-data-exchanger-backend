@@ -7,18 +7,20 @@ import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.eclipse.tractusx.sde.test.tooling.SubmodelEnum;
 import org.eclipse.tractusx.sde.test.tooling.rest.request.CreateDataRequest;
-import org.springframework.http.ResponseEntity;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
 
 public class SubModelProcessProvider {
 
+    private String processId = "";
+    private ExtractableResponse<Response> response;
     private final AuthenticationProvider authenticationProvider;
 
     public SubModelProcessProvider() {
@@ -36,43 +38,44 @@ public class SubModelProcessProvider {
         ));
     }
 
-    public ResponseEntity uploadDataManual(final SubmodelEnum subModel, final CreateDataRequest body) {
-        return given().log().body()
+    public void uploadDataManual(SubmodelEnum subModel, CreateDataRequest body) {
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .contentType(ContentType.JSON)
                 .body(body)
                 .when()
                 .post("/api/" + subModel.toString() + "/manualentry")
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
 
     }
 
-    public ResponseEntity getData(SubmodelEnum subModel, String uuid) {
-        return given().log().body()
+    public void getData(SubmodelEnum subModel, String uuid) {
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
-                .contentType(ContentType.JSON)
                 .when()
                 .get("/api/" + subModel.toString() + "/public/" + uuid)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 
-    public ResponseEntity deleteData(SubmodelEnum subModel, String processId) {
-        return given().log().body()
+    public void deleteData(SubmodelEnum subModel) {
+        processId = response.path("processId");
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
-                .contentType(ContentType.JSON)
                 .when()
                 .delete("/api/" + subModel.toString() + "/delete/" + processId)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 
 
+    public void checkIfDataIsUploaded(SubmodelEnum subModel, String uuid) {
+    }
+
+    public void checkIfDataIsDeleted(SubmodelEnum subModel, String uuid) {
+    }
 }

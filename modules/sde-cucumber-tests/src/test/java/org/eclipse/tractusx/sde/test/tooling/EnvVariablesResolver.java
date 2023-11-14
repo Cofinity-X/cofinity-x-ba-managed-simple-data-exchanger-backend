@@ -2,6 +2,14 @@ package org.eclipse.tractusx.sde.test.tooling;
 
 public class EnvVariablesResolver {
 
+    public static String getUsername() {
+        return System.getenv("USERNAME");
+    }
+
+    public static String getPassword() {
+        return System.getenv("PASSWORD");
+    }
+
     public static String getSupervisorClientId() {
         return System.getenv("SUPERVISOR_CLIENT_ID");
     }

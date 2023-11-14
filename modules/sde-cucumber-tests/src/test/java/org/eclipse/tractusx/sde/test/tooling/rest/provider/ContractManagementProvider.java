@@ -6,16 +6,17 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
 
 public class ContractManagementProvider {
 
+    private ExtractableResponse<Response> response;
     private final AuthenticationProvider authenticationProvider;
 
     public ContractManagementProvider() {
@@ -33,38 +34,35 @@ public class ContractManagementProvider {
         ));
     }
 
-    public ResponseEntity getContractAgreements(final String type) {
-        return given().log().body()
+    public void getContractAgreements(String type) {
+        response =  given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .queryParam("maxLimit", 10)
                 .queryParam("offset", 0)
                 .when()
                 .get("/api/contract-agreements/" + type)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 
-    public ResponseEntity updateContractAgreement(final String action, final String type, final String id) {
+    public void updateContractAgreement(String action, String type, String id) {
         if (action.equals("decline") && type.equals("consumer")) {
-            return given().log().body()
+            response = given()
                     .spec(authenticationProvider.getRequestSpecification())
                     .when()
                     .get("/api/contract-agreements/" + id + "/" + type + "/" + action)
                     .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .extract()
-                    .as(ResponseEntity.class);
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract();
         }
 
-        return given().log().body()
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .when()
                 .post("/api/contract-agreements/" + id + "/" + type + "/" + action)
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 }

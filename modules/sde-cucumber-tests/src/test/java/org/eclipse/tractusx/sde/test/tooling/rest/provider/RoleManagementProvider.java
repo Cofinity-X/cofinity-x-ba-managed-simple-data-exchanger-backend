@@ -6,15 +6,24 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoleManagementProvider {
     private final AuthenticationProvider authenticationProvider;
+
+    private ExtractableResponse<Response> response;
 
     public RoleManagementProvider() {
         authenticationProvider = AuthenticationProvider.getInstance();
@@ -31,25 +40,97 @@ public class RoleManagementProvider {
         ));
     }
 
-    public ResponseEntity getAllPermissions() {
-        return given().log().body()
+    public void getAllPermissions() {
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .when()
-                .get("/api/user/role/permission")
+                .get("/api/user/role/permissions")
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 
-    public ResponseEntity getRolePermissions(final String role) {
-        return given().log().body()
+    public void getRolePermissions(String role) {
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .when()
-                .get("/api/role/" + role + "/permission")
+                .get("/api/role/" + role + "/permissions")
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+    }
+
+    public void createRole(JSONObject body) {
+        response = given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .contentType(ContentType.JSON)
+                .body(body.toString())
+                .when()
+                .post("/api/role")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+    }
+
+    public void verifyAllPermissions() {
+        final ArrayList permissions = response.as(ArrayList.class);
+        assertEquals(permissions.size(), 30);
+    }
+
+    public void verifyRolePermissions(String role) {
+        final ArrayList permissions = response.as(ArrayList.class);
+        int permissionsCount;
+        switch (role) {
+            case "User" -> permissionsCount = 11;
+            case "Admin" -> permissionsCount = 6;
+            case "Creator" -> permissionsCount = 13;
+            default -> permissionsCount = 0;
+        }
+        assertEquals(permissionsCount, permissions.size());
+    }
+
+
+    public void addPermissionsToRole(String role, JSONArray body) {
+        response = given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .contentType(ContentType.JSON)
+                .body(body.toString())
+                .when()
+                .post("/api/role/" + role + "/permissions")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+    }
+
+    public void verifyUserIsCreated(String role) {
+        response = given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .when()
+                .get("/api/role/" + role + "/permissions")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+
+        final ArrayList permissions = response.as(ArrayList.class);
+        assertEquals(1, permissions.size());
+    
+    }
+
+    public void deleteRole(String role) {
+        given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .when()
+                .delete("/api/role/" + role)
+                .then()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
+    public void verifyRoleIsDeleted(String role) {
+         given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .when()
+                .get("/api/role/" + role + "/permissions")
+                .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 }

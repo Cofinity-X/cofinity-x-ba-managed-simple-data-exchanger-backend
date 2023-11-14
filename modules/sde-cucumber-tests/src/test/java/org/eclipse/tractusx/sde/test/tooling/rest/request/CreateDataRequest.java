@@ -17,7 +17,7 @@ public class CreateDataRequest {
     @JsonProperty("bpn_numbers")
     private ArrayList<String> bpnNumbers;
     @JsonProperty("row_data")
-    private Object rowData;
+    private ArrayList<Object> rowData;
 
 
 

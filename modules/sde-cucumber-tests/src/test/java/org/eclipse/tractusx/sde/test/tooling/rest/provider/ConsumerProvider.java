@@ -6,16 +6,20 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.eclipse.tractusx.sde.test.tooling.rest.request.SubscribeDataOffersRequest;
-import org.springframework.http.ResponseEntity;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
 
 public class ConsumerProvider {
+
+    private ExtractableResponse<Response> response;
+
+    private String processId = "";
 
     private final AuthenticationProvider authenticationProvider;
 
@@ -34,27 +38,45 @@ public class ConsumerProvider {
         ));
     }
 
-    public ResponseEntity queryDataOffers(final String providerUrl) {
-        return given().log().body()
+    public void queryDataOffers(String providerUrl) {
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .queryParam("providerUrl", providerUrl)
                 .when()
                 .get("/api/query-data-offers")
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 
-    public ResponseEntity subscribeDataOffers(final SubscribeDataOffersRequest body) {
-        return given().log().body()
+    public void subscribeDataOffers(SubscribeDataOffersRequest body) {
+        response = given().log().body()
                 .spec(authenticationProvider.getRequestSpecification())
                 .body(body)
                 .when()
                 .post("/api/subscribe-data-offers")
                 .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract()
-                .as(ResponseEntity.class);
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+    }
+
+    public void downloadDataOffer() {
+        processId = response.path("processId");
+        given().spec(authenticationProvider.getRequestSpecification())
+                .queryParam("processId", processId)
+                .when()
+                .post("/api/download-data-offers")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
+    }
+
+    public void getDownloadHistory() {
+        given().spec(authenticationProvider.getRequestSpecification())
+                .when()
+                .post("/api/view-download-history/" + processId)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract();
     }
 }

@@ -52,7 +52,7 @@ public class AuthenticationProvider {
 
 
 
-    public void loginToEnvironment(final SdeEnvironmentEnum environment) {
+    public void loginToEnvironment(SdeEnvironmentEnum environment) {
         if (environment.equals(SDE_A)) {
             host = EnvVariablesResolver.getSDE_A_Host();
             currentEnv = SDE_A;
@@ -60,7 +60,6 @@ public class AuthenticationProvider {
             host = EnvVariablesResolver.getSDE_B_Host();
             currentEnv = SDE_B;
         }
-        System.out.println(host);
     }
 
     public RequestSpecification getRequestSpecification() {

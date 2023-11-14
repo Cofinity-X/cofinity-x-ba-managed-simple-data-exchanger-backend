@@ -12,9 +12,9 @@ import org.eclipse.tractusx.sde.submodels.spt.model.Aspect;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SubmodelUtils {
+public class SubmodelProcessUtils {
 
-    public static Batch buildBatchRowData(final Map<String, String> input) {
+    public static Batch buildBatchRowData(Map<String, String> input) {
         final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c9");
         final String batchId = input.getOrDefault("batch_id", "NO-159040131155901488695379");
         final String part_instance_id = input.getOrDefault("part_instance_id", "PINO-34634534536");
@@ -36,7 +36,7 @@ public class SubmodelUtils {
                 .build();
     }
 
-    public static SingleLevelUsageAsBuilt buildSingleLevelUsageAsBuildRowData(final Map<String, String> input) {
+    public static SingleLevelUsageAsBuilt buildSingleLevelUsageAsBuildRowData(Map<String, String> input) {
         final String parent_uuid = input.getOrDefault("parent_uuid", "urn:uuid:bC7ADFb4-596a-Fe7F-6F28-a5EB7738D2Ca");
         final String parent_part_instance_id = input.getOrDefault("parent_part_instance_id", "NO-159040131155901488695376");
         final String parent_manufacturer_part_id = input.getOrDefault("parent_manufacturer_part_id", "MAN-159040131155901488695376");
@@ -70,7 +70,7 @@ public class SubmodelUtils {
                 .build();
     }
 
-    public static PartAsPlanned buildPartAsPlannedRowData(final Map<String, String> input) {
+    public static PartAsPlanned buildPartAsPlannedRowData(Map<String, String> input) {
         final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c2");
         final String manufacturer_part_id = input.getOrDefault("manufacturer_part_id", "37754B7-76");
         final String valid_from = input.getOrDefault("valid_from", "2021-06-14T06:55:29.935Z");
@@ -91,7 +91,7 @@ public class SubmodelUtils {
     }
 
     // Single Level Bom AsBuilt
-    public static AspectRelationship buildAssemblyPartRelationshipRowData(final Map<String, String> input) {
+    public static AspectRelationship buildAssemblyPartRelationshipRowData(Map<String, String> input) {
         final String parent_part_instance_id = input.getOrDefault("parent_part_instance_id", "NO-159040131155901488695376");
         final String parent_manufacturer_part_id = input.getOrDefault("parent_manufacturer_part_id", "MAN-159040131155901488695376");
         final String part_instance_id = input.getOrDefault("part_instance_id", "NO-159040131155901488695376");
@@ -115,7 +115,7 @@ public class SubmodelUtils {
                 .build();
     }
 
-    public static PartSiteInformationAsPlanned buildPartSiteInfoAsPlannedRowData(final Map<String, String> input) {
+    public static PartSiteInformationAsPlanned buildPartSiteInfoAsPlannedRowData(Map<String, String> input) {
         final String uuid = input.getOrDefault("uuid", "urn:uuid:580d3adf-1981-44a0-a214-13d6ceed9379");
         final String manufacturer_part_id = input.getOrDefault("manufacturer_part_id", "37754B7-76");
         final String catenax_site_id = input.getOrDefault("catenax_site_id", "BPNS1234567890ZZ");
@@ -135,7 +135,7 @@ public class SubmodelUtils {
                 .build();
     }
 
-    public static PcfAspect buildPcfRowData(final Map<String, String> input) {
+    public static PcfAspect buildPcfRowData(Map<String, String> input) {
         final String id = input.getOrDefault("id", "3893bb5d-da16-4dc1-9185-11d97476c254");
         final String companyName = input.getOrDefault("companyName", "My Corp");
         final String companyId = input.getOrDefault("companyId", "urn:uuid:51131FB5-42A2-4267-A402-0ECFEFAD1619");
@@ -200,7 +200,7 @@ public class SubmodelUtils {
     }
 
     // Serial Part
-    public static Aspect buildSerialPartTypizationRowData(final Map<String, String> input) {
+    public static Aspect buildSerialPartTypizationRowData(Map<String, String> input) {
         final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c2");
         final String partInstanceId = input.getOrDefault("part_instance_id", "NO-159040131155901488695376");
         final String manufacturingDate = input.getOrDefault("manufacturing_date", "2022-02-04T14:48:54.709Z");
@@ -224,7 +224,7 @@ public class SubmodelUtils {
                 .build();
     }
 
-    public static SingleLevelBoMAsPlanned buildSingleLevelBomAsPlannedRowData(final Map<String, String> input) {
+    public static SingleLevelBoMAsPlanned buildSingleLevelBomAsPlannedRowData(Map<String, String> input) {
         final String parentUuid = input.getOrDefault("parent_uuid", "urn:uuid:055c1128-0375-47c8-98de-7cf802c3241d");
         final String parentManufacturerPartId = input.getOrDefault("parent_manufacturer_part_id", "37754B7-76");
         final String uuid = input.getOrDefault("uuid", "urn:uuid:5daB938E-Cafa-92B3-7ca1-9aD7885e9dC8");

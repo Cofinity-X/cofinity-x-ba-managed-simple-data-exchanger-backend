@@ -16,11 +16,16 @@ import static io.restassured.RestAssured.given;
 @AllArgsConstructor
 public class Authentication {
 
+    private String username;
+    private String password;
     private String clientId;
     private String clientSecret;
     private String keycloakHost;
 
     public Authentication() {
+
+        username = EnvVariablesResolver.getUsername();
+        password = EnvVariablesResolver.getPassword();
         clientId = EnvVariablesResolver.getSupervisorClientId();
         clientSecret = EnvVariablesResolver.getSupervisorPassword();
         keycloakHost = EnvVariablesResolver.getKeycloakHost();
@@ -28,9 +33,10 @@ public class Authentication {
 
     public String obtainAccessToken() {
         final Map<String, String> oauth2Payload = new HashMap<>();
-        oauth2Payload.put("grant_type", "client_credentials");
+        oauth2Payload.put("grant_type", "password");
+        oauth2Payload.put("username", username);
+        oauth2Payload.put("password", password);
         oauth2Payload.put("client_id", clientId);
-        oauth2Payload.put("client_secret", clientSecret);
 
         return given()
                 .params(oauth2Payload)

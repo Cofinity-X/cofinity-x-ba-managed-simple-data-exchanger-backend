@@ -7,5 +7,11 @@ Feature: Handle data offers
   Scenario: Subscribe data offers from provider
     Given I am logged into SDE_A application
     When I subscribe the data offers
-    | providerUrl    |  http://test.com    |
-    | connectorId    |  Test324893245634   |
+      | providerUrl | http://test.com  |
+      | connectorId | Test324893245634 |
+
+  Scenario: Download Data Offers
+    Given I am logged into SDE_A application
+    When  I query the data offers from "http://test.com"
+    When I download data offers
+    Then I check the download history

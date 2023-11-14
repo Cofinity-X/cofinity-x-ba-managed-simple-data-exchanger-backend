@@ -105,7 +105,7 @@ public class SecurityConfig {
 		http.anonymous();
 
 		// Enable and configure CORS
-		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+		http.cors();
 
 		// State-less session (state in access-token only)
 		http.sessionManagement(
@@ -130,10 +130,10 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	protected CorsConfigurationSource corsConfigurationSource() {
+	protected CorsConfigurationSource corsConfigurationSource(@Value("${api.cors.origins}") List<String> allowedOrigins) {
 		// Very permissive CORS config...
 		final var configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedOrigins(allowedOrigins);
 		configuration.setAllowedMethods(Arrays.asList("*"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setExposedHeaders(Arrays.asList("*"));

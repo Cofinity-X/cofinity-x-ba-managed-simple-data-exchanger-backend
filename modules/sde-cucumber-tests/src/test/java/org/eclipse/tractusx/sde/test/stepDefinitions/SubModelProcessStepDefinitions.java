@@ -10,8 +10,7 @@ import org.eclipse.tractusx.sde.test.tooling.SubmodelEnum;
 import org.eclipse.tractusx.sde.test.tooling.rest.provider.SubModelProcessProvider;
 import org.eclipse.tractusx.sde.test.tooling.rest.request.CreateDataRequest;
 import org.eclipse.tractusx.sde.test.utils.RequestUtils;
-import org.eclipse.tractusx.sde.test.utils.SubmodelUtils;
-import org.springframework.http.ResponseEntity;
+import org.eclipse.tractusx.sde.test.utils.SubmodelProcessUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -37,22 +36,21 @@ public class SubModelProcessStepDefinitions {
     @When("I upload Data with the {subModel} submodel")
     public void iUploadDataWithTheSubModel(final SubmodelEnum subModel, final DataTable dataTable) {
         final Map<String, String> input = normalize(dataTable.asMap());
-        Object rowData;
+        final ArrayList<Object> rowData = new ArrayList<>();
         switch (subModel) {
-            case ASSEMBLY_PART_RELATIONSHIP -> rowData = SubmodelUtils.buildAssemblyPartRelationshipRowData(input);
-            case BATCH -> rowData = SubmodelUtils.buildBatchRowData(input);
-            case PART_AS_PLANNED -> rowData = SubmodelUtils.buildPartAsPlannedRowData(input);
-            case PART_SITE_INFORMATION_AS_PLANNED -> rowData = SubmodelUtils.buildPartSiteInfoAsPlannedRowData(input);
-            case PCF -> rowData = SubmodelUtils.buildPcfRowData(input);
-            case SERIAL_PART_TYPIZATION -> rowData = SubmodelUtils.buildSerialPartTypizationRowData(input);
-            case SINGLE_LEVEL_BOM_AS_PLANNED -> rowData = SubmodelUtils.buildSingleLevelBomAsPlannedRowData(input);
-            case SINGLE_LEVEL_USAGE_AS_BUILT -> rowData = SubmodelUtils.buildSingleLevelUsageAsBuildRowData(input);
-            default -> rowData = new Object();
+            case ASSEMBLY_PART_RELATIONSHIP -> rowData.add(SubmodelProcessUtils.buildAssemblyPartRelationshipRowData(input));
+            case BATCH -> rowData.add(SubmodelProcessUtils.buildBatchRowData(input));
+            case PART_AS_PLANNED -> rowData.add(SubmodelProcessUtils.buildPartAsPlannedRowData(input));
+            case PART_SITE_INFORMATION_AS_PLANNED -> rowData.add(SubmodelProcessUtils.buildPartSiteInfoAsPlannedRowData(input));
+            case PCF -> rowData.add(SubmodelProcessUtils.buildPcfRowData(input));
+            case SERIAL_PART_TYPIZATION -> rowData.add(SubmodelProcessUtils.buildSerialPartTypizationRowData(input));
+            case SINGLE_LEVEL_BOM_AS_PLANNED -> rowData.add(SubmodelProcessUtils.buildSingleLevelBomAsPlannedRowData(input));
+            case SINGLE_LEVEL_USAGE_AS_BUILT -> rowData.add(SubmodelProcessUtils.buildSingleLevelUsageAsBuildRowData(input));
         }
 
         final ArrayList<UsagePolicies> policies = RequestUtils.buildUsagePolicies(input);
-        final ArrayList<String> bpnNumbers = SubmodelUtils.buildBpnNumbers(input);
-        final String typeOfAccess = "ACCESS";
+        final ArrayList<String> bpnNumbers = SubmodelProcessUtils.buildBpnNumbers(input);
+        final String typeOfAccess = "restricted";
 
         final CreateDataRequest body = CreateDataRequest.builder()
                 .rowData(rowData)
@@ -61,17 +59,32 @@ public class SubModelProcessStepDefinitions {
                 .typeOfAccess(typeOfAccess)
                 .build();
 
-        ResponseEntity response = subModelProcessProvider.uploadDataManual(subModel, body);
+        subModelProcessProvider.uploadDataManual(subModel, body);
     }
 
     @When("I search for the {subModel} submodel with the uuid: {string}")
     public void iSearchForTheSubmodelWithUuid(final SubmodelEnum submodelEnum, final String uuid) {
-        ResponseEntity response = subModelProcessProvider.getData(submodelEnum, uuid);
+        subModelProcessProvider.getData(submodelEnum, uuid);
     }
 
     @Then("I check, if the {subModel} data is uploaded")
     public void iCheckIfTheDataIsUploaded(final SubmodelEnum subModel, final DataTable dataTable) {
         final Map<String, String> input = normalize(dataTable.asMap());
+        final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c9");
 
+        subModelProcessProvider.checkIfDataIsUploaded(subModel, uuid);
+    }
+
+    @When("I delete the checked {subModel} data")
+    public void iDeleteTheCheckedData(final SubmodelEnum submodelEnum) {
+        subModelProcessProvider.deleteData(submodelEnum);
+    }
+
+    @Then("I check if the {subModel} data is deleted")
+    public void iCheckIfTheDataIsDeleted(final SubmodelEnum subModel, final DataTable dataTable) {
+        final Map<String, String> input = normalize(dataTable.asMap());
+        final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c9");
+
+        subModelProcessProvider.checkIfDataIsDeleted(subModel, uuid);
     }
 }

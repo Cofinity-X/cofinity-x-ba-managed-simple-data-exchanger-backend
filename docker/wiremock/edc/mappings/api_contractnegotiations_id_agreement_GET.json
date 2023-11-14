@@ -1,0 +1,37 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPathTemplate": "/data/v2/contractnegotiations/{contractnegotiationsId}/agreement"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "@id": "123",
+      "edc:providerId": "456",
+      "edc:consumerId": "789",
+      "edc:contractSigningDate": 1638297600000,
+      "contractStartDate": 1638297600000,
+      "contractEndDate": 1638297600000,
+      "edc:assetId": "abc",
+      "edc:policy": {
+        "@id": "use-eu",
+        "odrl:permission": null,
+        "odrl:prohibition": [],
+        "odrl:obligation": [],
+        "extensibleProperties": null,
+        "inheritsFrom": null,
+        "assigner": null,
+        "assignee": null,
+        "target": null,
+        "@type": "dcat:Distribution"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}
