@@ -22,12 +22,9 @@
 
 package org.eclipse.tractusx.sde.submodels.apr.steps;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerUseCaseException;
@@ -41,9 +38,11 @@ import org.eclipse.tractusx.sde.digitaltwins.facilitator.DigitalTwinsUtility;
 import org.eclipse.tractusx.sde.submodels.apr.model.AspectRelationship;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -155,7 +154,7 @@ public class DigitalTwinsAspectRelationShipCsvHandlerUseCase extends Step {
 		ShellLookupRequest shellLookupRequest = new ShellLookupRequest();
 		shellLookupRequest.addLocalIdentifier(CommonConstants.PART_INSTANCE_ID,
 				aspectRelationShip.getParentPartInstanceId());
-		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_PART_ID,
+		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_PART_ID_LEGACY,
 				aspectRelationShip.getParentManufacturerPartId());
 		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 
@@ -171,7 +170,7 @@ public class DigitalTwinsAspectRelationShipCsvHandlerUseCase extends Step {
 		ShellLookupRequest shellLookupRequest = new ShellLookupRequest();
 		shellLookupRequest.addLocalIdentifier(CommonConstants.PART_INSTANCE_ID,
 				aspectRelationShip.getChildPartInstanceId());
-		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_PART_ID,
+		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_PART_ID_LEGACY,
 				aspectRelationShip.getChildManufacturerPartId());
 		shellLookupRequest.addLocalIdentifier(CommonConstants.MANUFACTURER_ID,
 				aspectRelationShip.getChildManufacturerId());

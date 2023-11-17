@@ -21,10 +21,8 @@
 package org.eclipse.tractusx.sde.submodels.pcf.steps;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerUseCaseException;
@@ -40,8 +38,9 @@ import org.eclipse.tractusx.sde.digitaltwins.facilitator.DigitalTwinsUtility;
 import org.eclipse.tractusx.sde.submodels.pcf.model.PcfAspect;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -119,7 +118,7 @@ public class DigitalTwinsPcfCsvHandlerUseCase extends Step {
 
 	private Map<String, String> getSpecificAssetIds(PcfAspect pcfAspect) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID, pcfAspect.getProductId());
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY, pcfAspect.getProductId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		specificIdentifiers.put(CommonConstants.ASSET_LIFECYCLE_PHASE, pcfAspect.getAssetLifeCyclePhase());
 

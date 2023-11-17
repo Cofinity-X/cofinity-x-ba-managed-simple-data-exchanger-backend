@@ -33,7 +33,9 @@ public class CommonConstants {
 	public static final String DELETED_Y = "Y";
 
 	public static final String PART_INSTANCE_ID = "partInstanceId";
-	public static final String MANUFACTURER_PART_ID = "manufacturerPartId";
+	public static final String MANUFACTURER_PART_ID = "mpn";
+	public static final String MANUFACTURER_PART_ID_LEGACY = "manufacturerPartId";
+
 	public static final String MANUFACTURER_ID = "manufacturerId";
 	public static final String CUSTOMER_PART_ID = "customerPartId";
 	public static final String ASSET_LIFECYCLE_PHASE = "assetLifecyclePhase";

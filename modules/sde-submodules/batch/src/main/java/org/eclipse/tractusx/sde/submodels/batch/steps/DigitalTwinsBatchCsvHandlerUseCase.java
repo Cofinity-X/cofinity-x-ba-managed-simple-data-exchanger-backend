@@ -20,10 +20,8 @@
 
 package org.eclipse.tractusx.sde.submodels.batch.steps;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
@@ -41,8 +39,9 @@ import org.eclipse.tractusx.sde.submodels.batch.constants.BatchConstants;
 import org.eclipse.tractusx.sde.submodels.batch.model.Batch;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -126,7 +125,7 @@ public class DigitalTwinsBatchCsvHandlerUseCase extends Step {
 	private Map<String, String> getSpecificAssetIds(Batch batch) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
 		specificIdentifiers.put(CommonConstants.PART_INSTANCE_ID, batch.getPartInstanceId());
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID, batch.getManufacturerPartId());
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY, batch.getManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		if (StringUtils.isNotBlank(batch.getBatchId())) {
 			specificIdentifiers.put(BatchConstants.BATCH_ID, batch.getBatchId());
