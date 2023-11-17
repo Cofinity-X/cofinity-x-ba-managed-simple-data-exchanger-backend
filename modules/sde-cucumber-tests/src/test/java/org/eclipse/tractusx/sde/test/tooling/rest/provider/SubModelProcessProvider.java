@@ -16,6 +16,7 @@ import org.eclipse.tractusx.sde.test.tooling.rest.request.CreateDataRequest;
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubModelProcessProvider {
 
@@ -46,23 +47,25 @@ public class SubModelProcessProvider {
                 .when()
                 .post("/api/" + subModel.toString() + "/manualentry")
                 .then()
+                .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .extract();
 
     }
 
     public void getData(SubmodelEnum subModel, String uuid) {
-        response = given()
+        final String responseUuid = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .when()
                 .get("/api/" + subModel.toString() + "/public/" + uuid)
-                .then()
+                .then().log().all()
                 .statusCode(HttpStatus.SC_OK)
-                .extract();
+                .extract().jsonPath().get("csv.uuid");
+        assertEquals(responseUuid,uuid);
     }
 
     public void deleteData(SubmodelEnum subModel) {
-        processId = response.path("processId");
+        processId = response.asString();
         response = given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .when()
@@ -73,9 +76,14 @@ public class SubModelProcessProvider {
     }
 
 
-    public void checkIfDataIsUploaded(SubmodelEnum subModel, String uuid) {
-    }
 
     public void checkIfDataIsDeleted(SubmodelEnum subModel, String uuid) {
+        given()
+                .spec(authenticationProvider.getRequestSpecification())
+                .when()
+                .get("/api/" + subModel.toString() + "/public/" + uuid)
+                .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract();
     }
 }

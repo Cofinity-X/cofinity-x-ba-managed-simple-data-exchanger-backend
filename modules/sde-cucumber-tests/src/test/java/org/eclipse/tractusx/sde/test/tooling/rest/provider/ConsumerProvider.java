@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -14,6 +16,8 @@ import org.eclipse.tractusx.sde.test.tooling.rest.request.SubscribeDataOffersReq
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ConsumerProvider {
 
@@ -50,8 +54,9 @@ public class ConsumerProvider {
     }
 
     public void subscribeDataOffers(SubscribeDataOffersRequest body) {
-        response = given().log().body()
+        response = given()
                 .spec(authenticationProvider.getRequestSpecification())
+                .contentType(ContentType.JSON)
                 .body(body)
                 .when()
                 .post("/api/subscribe-data-offers")
@@ -61,22 +66,35 @@ public class ConsumerProvider {
     }
 
     public void downloadDataOffer() {
-        processId = response.path("processId");
+        processId = response.asString();
         given().spec(authenticationProvider.getRequestSpecification())
                 .queryParam("processId", processId)
                 .when()
-                .post("/api/download-data-offers")
+                .get("/api/download-data-offers")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract();
     }
 
     public void getDownloadHistory() {
-        given().spec(authenticationProvider.getRequestSpecification())
+        processId = response.asString();
+        final JsonPath responsePath = given().spec(authenticationProvider.getRequestSpecification())
                 .when()
-                .post("/api/view-download-history/" + processId)
+                .get("/api/view-download-history/" + processId)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract();
+                .extract().jsonPath();
+        assertEquals(processId, responsePath.getString("[-1].processId"));
+    }
+
+    public void checkForReturnedData() {
+        final String id = response.body().jsonPath().get("[0].assetId");
+        assertNotNull(id);
+    }
+
+    public void checkForProcessId() {
+        final String id = response.asString();
+        assertNotNull(id);
+
     }
 }

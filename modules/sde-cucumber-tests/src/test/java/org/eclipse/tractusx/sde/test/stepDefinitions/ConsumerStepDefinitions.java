@@ -34,8 +34,8 @@ public class ConsumerStepDefinitions {
     public void iSubscribeTheDataOffers(final DataTable dataTable) {
         final Map<String, String> input = normalize(dataTable.asMap());
 
-        final String connectorId = input.get("connectorId") == null ? "TestID234234" : input.get("connectorId");
-        final String providerUrl = input.get("providerUrl") == null ? "http://localhost" : input.get("providerUrl");
+        final String connectorId = input.getOrDefault("connectorId", "TestID234234");
+        final String providerUrl = input.getOrDefault("providerUrl", "endpoint");
 
         final ArrayList<UsagePolicies> policies = RequestUtils.buildUsagePolicies(input);
         final ArrayList<Offer> offers = RequestUtils.buildOffers(input);
@@ -59,5 +59,15 @@ public class ConsumerStepDefinitions {
     @Then("I check the download history")
     public void iCheckTheDownloadHistory() {
         consumerProvider.getDownloadHistory();
+    }
+
+    @Then("data offers should be returned")
+    public void dataOffersShouldBeReturned() {
+        consumerProvider.checkForReturnedData();
+    }
+
+    @Then("a process id should be returned")
+    public void aProcessIdShouldBeReturned() {
+        consumerProvider.checkForProcessId();
     }
 }

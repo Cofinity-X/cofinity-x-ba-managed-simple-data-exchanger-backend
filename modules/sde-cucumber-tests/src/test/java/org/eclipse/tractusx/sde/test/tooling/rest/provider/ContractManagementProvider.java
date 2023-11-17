@@ -13,10 +13,13 @@ import org.apache.http.HttpStatus;
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContractManagementProvider {
 
     private ExtractableResponse<Response> response;
+
+    private String currentType;
     private final AuthenticationProvider authenticationProvider;
 
     public ContractManagementProvider() {
@@ -35,6 +38,7 @@ public class ContractManagementProvider {
     }
 
     public void getContractAgreements(String type) {
+        currentType = type;
         response =  given()
                 .spec(authenticationProvider.getRequestSpecification())
                 .queryParam("maxLimit", 10)
@@ -47,22 +51,29 @@ public class ContractManagementProvider {
     }
 
     public void updateContractAgreement(String action, String type, String id) {
+        currentType = type;
         if (action.equals("decline") && type.equals("consumer")) {
             response = given()
                     .spec(authenticationProvider.getRequestSpecification())
                     .when()
                     .get("/api/contract-agreements/" + id + "/" + type + "/" + action)
-                    .then()
-                    .statusCode(HttpStatus.SC_OK)
+                    .then().log().all()
+                    .statusCode(HttpStatus.SC_CREATED)
+                    .extract();
+        } else {
+            response = given()
+                    .spec(authenticationProvider.getRequestSpecification())
+                    .when()
+                    .post("/api/contract-agreements/" + id + "/" + type + "/" + action)
+                    .then().log().all()
+                    .statusCode(HttpStatus.SC_CREATED)
                     .extract();
         }
-
-        response = given()
-                .spec(authenticationProvider.getRequestSpecification())
-                .when()
-                .post("/api/contract-agreements/" + id + "/" + type + "/" + action)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract();
     }
+
+    public void checkIfContractsAreReturned() {
+        String type = response.jsonPath().getString("contracts[0].type");
+        assertEquals(type.toLowerCase(), currentType);
+    }
+
 }

@@ -22,6 +22,7 @@ package org.eclipse.tractusx.sde.submodels.pcf.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.eclipse.tractusx.sde.common.entities.UsagePolicies;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,6 +37,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PcfAspect {
 

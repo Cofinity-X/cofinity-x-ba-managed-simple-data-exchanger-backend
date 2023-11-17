@@ -22,7 +22,7 @@ public class TestUtils {
 
     public static Map<String, String> normalize(Map<String, String> input) {
         return input.entrySet().stream().map(entry -> Map.entry(normalizeString(entry.getKey()), normalizeString(entry.getValue())))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (r1, r2) -> r1));
     }
 
     private static String normalizeString(String input) {

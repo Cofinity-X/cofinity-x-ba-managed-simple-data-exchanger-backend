@@ -3,6 +3,7 @@ package org.eclipse.tractusx.sde.test.stepDefinitions;
 import groovy.util.logging.Slf4j;
 import io.cucumber.java.Before;
 import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.eclipse.tractusx.sde.test.tooling.rest.provider.ContractManagementProvider;
 @Slf4j
@@ -33,5 +34,10 @@ public class ContractManagementStepDefinitions {
     @When("I {contractAction} the {companyType} contract with the id {string}")
     public void iUpdateContractAgreements(final String action, final String type, final String id) {
         contractManagementProvider.updateContractAgreement(action, type, id);
+    }
+
+    @Then("I check if contracts are returned")
+    public void iCheckIfContractsAreReturned() {
+        contractManagementProvider.checkIfContractsAreReturned();
     }
 }

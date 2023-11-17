@@ -19,15 +19,13 @@ public class Authentication {
     private String username;
     private String password;
     private String clientId;
-    private String clientSecret;
     private String keycloakHost;
 
     public Authentication() {
 
         username = EnvVariablesResolver.getUsername();
         password = EnvVariablesResolver.getPassword();
-        clientId = EnvVariablesResolver.getSupervisorClientId();
-        clientSecret = EnvVariablesResolver.getSupervisorPassword();
+        clientId = EnvVariablesResolver.getClientId();
         keycloakHost = EnvVariablesResolver.getKeycloakHost();
     }
 

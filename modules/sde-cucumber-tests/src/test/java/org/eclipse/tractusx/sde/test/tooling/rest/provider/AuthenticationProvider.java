@@ -67,6 +67,8 @@ public class AuthenticationProvider {
 
         final RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.addHeader("Authorization", "Bearer " + accessToken);
+        builder.addHeader("Access-Control-Allow-Origin", "*");
+        builder.addHeader("x-api-key",EnvVariablesResolver.getApiKey());
         builder.setBaseUri(host);
 
         return builder.build();

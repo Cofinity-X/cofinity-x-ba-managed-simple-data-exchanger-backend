@@ -15,7 +15,7 @@ public class RequestUtils {
     public static ArrayList<UsagePolicies> buildUsagePolicies(Map<String, String> input) {
         final String type = input.getOrDefault("type", "DURATION");
         final String value = input.getOrDefault("value", "1");
-        final String typeOfAccess = input.getOrDefault("type_of_access", "RESTRICTED");
+        final String typeOfAccess = input.getOrDefault("type_of_access", "UNRESTRICTED");
         final String durationUnit = input.getOrDefault("durationUnit", "YEAR");
         final UsagePolicies policy = UsagePolicies.builder()
                 .value(value)

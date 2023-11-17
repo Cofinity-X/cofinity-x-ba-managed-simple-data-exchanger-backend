@@ -50,7 +50,7 @@ public class SubModelProcessStepDefinitions {
 
         final ArrayList<UsagePolicies> policies = RequestUtils.buildUsagePolicies(input);
         final ArrayList<String> bpnNumbers = SubmodelProcessUtils.buildBpnNumbers(input);
-        final String typeOfAccess = "restricted";
+        final String typeOfAccess = "unrestricted";
 
         final CreateDataRequest body = CreateDataRequest.builder()
                 .rowData(rowData)
@@ -62,29 +62,18 @@ public class SubModelProcessStepDefinitions {
         subModelProcessProvider.uploadDataManual(subModel, body);
     }
 
-    @When("I search for the {subModel} submodel with the uuid: {string}")
-    public void iSearchForTheSubmodelWithUuid(final SubmodelEnum submodelEnum, final String uuid) {
+    @Then("I check if the {subModel} data with the uuid: {string} is uploaded")
+    public void iCheckForTheDataWithUuid(final SubmodelEnum submodelEnum, final String uuid) {
         subModelProcessProvider.getData(submodelEnum, uuid);
     }
 
-    @Then("I check, if the {subModel} data is uploaded")
-    public void iCheckIfTheDataIsUploaded(final SubmodelEnum subModel, final DataTable dataTable) {
-        final Map<String, String> input = normalize(dataTable.asMap());
-        final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c9");
-
-        subModelProcessProvider.checkIfDataIsUploaded(subModel, uuid);
+    @Then("I check if the {subModel} data with the uuid: {string} is deleted")
+    public void iCheckIfTheDataWithUuidIsDeleted(final SubmodelEnum submodelEnum, final String uuid) {
+        subModelProcessProvider.checkIfDataIsDeleted(submodelEnum, uuid);
     }
 
     @When("I delete the checked {subModel} data")
     public void iDeleteTheCheckedData(final SubmodelEnum submodelEnum) {
         subModelProcessProvider.deleteData(submodelEnum);
-    }
-
-    @Then("I check if the {subModel} data is deleted")
-    public void iCheckIfTheDataIsDeleted(final SubmodelEnum subModel, final DataTable dataTable) {
-        final Map<String, String> input = normalize(dataTable.asMap());
-        final String uuid = input.getOrDefault("uuid", "urn:uuid:8eea5f45-0823-48ce-a4fc-c3bf1cdfa4c9");
-
-        subModelProcessProvider.checkIfDataIsDeleted(subModel, uuid);
     }
 }
