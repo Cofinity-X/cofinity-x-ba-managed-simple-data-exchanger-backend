@@ -49,7 +49,7 @@ public class BPNDiscoveryUseCaseHandler extends Step {
 
 			bpnDiscoveryProxyService.bpnDiscoveryBatchData(bpnDiscoveryKeyList);
 		} catch (Exception e) {
-			throw new ServiceException("Exception in BPN Discovery creation : " + e.getMessage());
+			throw new ServiceException("Exception in BPN Discovery creation : " + e.getMessage(), e);
 		}
 
 	}
