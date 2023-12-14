@@ -34,4 +34,10 @@ public class ServiceException extends Exception {
 		super(exceptionstr);
 		log.debug(exceptionstr);
 	}
+
+
+	public ServiceException(String exceptionstr, Throwable cause) {
+		super(exceptionstr, cause);
+		log.error(exceptionstr, cause);
+	}
 }
