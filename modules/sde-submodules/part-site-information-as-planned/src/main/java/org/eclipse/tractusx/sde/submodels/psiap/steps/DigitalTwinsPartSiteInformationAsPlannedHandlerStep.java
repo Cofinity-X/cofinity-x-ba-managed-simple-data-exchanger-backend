@@ -19,10 +19,8 @@
  ********************************************************************************/
 package org.eclipse.tractusx.sde.submodels.psiap.steps;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerUseCaseException;
@@ -38,8 +36,9 @@ import org.eclipse.tractusx.sde.digitaltwins.facilitator.DigitalTwinsUtility;
 import org.eclipse.tractusx.sde.submodels.psiap.model.PartSiteInformationAsPlanned;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -126,7 +125,7 @@ public class DigitalTwinsPartSiteInformationAsPlannedHandlerStep extends Step {
 
 	private Map<String, String> getSpecificAssetIds(PartSiteInformationAsPlanned partSiteInformationAsPlannedAspect) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID, partSiteInformationAsPlannedAspect.getManufacturerPartId());
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY, partSiteInformationAsPlannedAspect.getManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		specificIdentifiers.put(CommonConstants.ASSET_LIFECYCLE_PHASE, CommonConstants.AS_PLANNED);
 

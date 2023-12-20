@@ -19,36 +19,24 @@
  ********************************************************************************/
 package org.eclipse.tractusx.sde.digitaltwins.facilitator;
 
-import static org.eclipse.tractusx.sde.common.constants.CommonConstants.ASSET_LIFECYCLE_PHASE;
-import static org.eclipse.tractusx.sde.common.constants.CommonConstants.MANUFACTURER_PART_ID;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Getter;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.utils.UUIdGenerator;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.Endpoint;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.ExternalSubjectId;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.KeyValuePair;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.Keys;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.ProtocolInformation;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.SecurityAttributes;
-import org.eclipse.tractusx.sde.digitaltwins.entities.common.SemanticId;
+import org.eclipse.tractusx.sde.digitaltwins.entities.common.*;
 import org.eclipse.tractusx.sde.digitaltwins.entities.request.CreateSubModelRequest;
 import org.eclipse.tractusx.sde.digitaltwins.entities.request.ShellDescriptorRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.*;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
+import static org.eclipse.tractusx.sde.common.constants.CommonConstants.ASSET_LIFECYCLE_PHASE;
+import static org.eclipse.tractusx.sde.common.constants.CommonConstants.MANUFACTURER_PART_ID_LEGACY;
 
 @Component
 @Getter
@@ -64,7 +52,7 @@ public class DigitalTwinsUtility {
 
 	ObjectMapper mapper = new ObjectMapper();
 
-	private static final Map<String, List<String>> publicReadableSpecificAssetIDs = Map.of(MANUFACTURER_PART_ID,
+	private static final Map<String, List<String>> publicReadableSpecificAssetIDs = Map.of(MANUFACTURER_PART_ID_LEGACY,
 			List.of("*"), ASSET_LIFECYCLE_PHASE, List.of("AsBuilt", "AsPlanned"));
 
 	@SneakyThrows

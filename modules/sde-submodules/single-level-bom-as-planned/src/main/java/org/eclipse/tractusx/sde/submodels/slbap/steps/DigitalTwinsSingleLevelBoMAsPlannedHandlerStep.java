@@ -19,10 +19,8 @@
  ********************************************************************************/
 package org.eclipse.tractusx.sde.submodels.slbap.steps;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerUseCaseException;
@@ -43,8 +41,9 @@ import org.eclipse.tractusx.sde.submodels.pap.repository.PartAsPlannedRepository
 import org.eclipse.tractusx.sde.submodels.slbap.model.SingleLevelBoMAsPlanned;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -143,7 +142,7 @@ public class DigitalTwinsSingleLevelBoMAsPlannedHandlerStep extends Step {
 
 	private Map<String, String> getSpecificAssetIds(PartAsPlanned partAsPlannedAspect) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID, partAsPlannedAspect.getManufacturerPartId());
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY, partAsPlannedAspect.getManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		specificIdentifiers.put(CommonConstants.ASSET_LIFECYCLE_PHASE, CommonConstants.AS_PLANNED);
 
@@ -162,7 +161,7 @@ public class DigitalTwinsSingleLevelBoMAsPlannedHandlerStep extends Step {
 	private Map<String, String> getSpecificAssetIdsForSingleLevel(SingleLevelBoMAsPlanned singleLevelBoMAsPlannedAspect) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
 		specificIdentifiers.put(CommonConstants.ASSET_LIFECYCLE_PHASE, CommonConstants.AS_PLANNED);
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID,
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY,
 				singleLevelBoMAsPlannedAspect.getParentManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		return specificIdentifiers;

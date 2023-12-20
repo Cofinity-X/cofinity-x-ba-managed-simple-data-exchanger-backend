@@ -19,10 +19,8 @@
  ********************************************************************************/
 package org.eclipse.tractusx.sde.submodels.sluab.steps;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.eclipse.tractusx.sde.common.constants.CommonConstants;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerDigitalTwinUseCaseException;
 import org.eclipse.tractusx.sde.common.exception.CsvHandlerUseCaseException;
@@ -43,8 +41,9 @@ import org.eclipse.tractusx.sde.submodels.spt.model.Aspect;
 import org.eclipse.tractusx.sde.submodels.spt.repository.AspectRepository;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -163,7 +162,7 @@ public class DigitalTwinsSingleLevelUsageAsBuiltCsvHandlerUseCase extends Step {
 
 		specificIdentifiers.put(CommonConstants.PART_INSTANCE_ID,
 				aspectSingleLevelUsageAsBuilt.getParentPartInstanceId());
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID,
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY,
 				aspectSingleLevelUsageAsBuilt.getParentManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 
@@ -177,7 +176,7 @@ public class DigitalTwinsSingleLevelUsageAsBuiltCsvHandlerUseCase extends Step {
 	private Map<String, String> getSpecificAssetIds(Aspect aspect) {
 		Map<String, String> specificIdentifiers = new HashMap<>();
 		specificIdentifiers.put(CommonConstants.PART_INSTANCE_ID, aspect.getPartInstanceId());
-		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID, aspect.getManufacturerPartId());
+		specificIdentifiers.put(CommonConstants.MANUFACTURER_PART_ID_LEGACY, aspect.getManufacturerPartId());
 		specificIdentifiers.put(CommonConstants.MANUFACTURER_ID, digitalTwinsUtility.getManufacturerId());
 		if (aspect.hasOptionalIdentifier()) {
 			specificIdentifiers.put(aspect.getOptionalIdentifierKey(), aspect.getOptionalIdentifierValue());
